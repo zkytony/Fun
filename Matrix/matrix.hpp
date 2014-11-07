@@ -17,6 +17,8 @@ public:
   Matrix transpose();
   void print();
   static Matrix readMatrix(std::string name);
+  Matrix swaprow_new(int r1, int r2);
+  void swaprow(int r1, int r2);
 private:
   int **m_arr;
   int r, c;

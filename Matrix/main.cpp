@@ -43,31 +43,7 @@ int** readMatrix()
 int main()
 {
   Matrix A = Matrix::readMatrix("A");
-  Matrix B = Matrix::readMatrix("B");
-  cout << "Operation (1-+, 2-*, 3-T)";
-  int op;
-  cin >> op;
-  if (op == 1)
-    {
-      Matrix C = A + B;
-      C.print();
-    }
-  else if (op == 2)
-    {
-      Matrix C = A * B;
-      C.print();
-    }
-  else if (op == 3)
-    {
-      Matrix C = A.transpose();
-      Matrix D = B.transpose();
-      cout << "Transpose of A" << endl;
-      C.print();
-      cout << "Transpose of B" << endl;
-      D.print();
-    }
-  else
-    {
-      cout << "Wrong";
-    }
+  A.print();
+  A.swaprow(0,1);
+  A.print();
 }

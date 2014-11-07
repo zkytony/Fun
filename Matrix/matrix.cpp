@@ -1,6 +1,7 @@
 #include "matrix.hpp"
 #include <iostream>
 #include <string>
+#include <math.h> // log10
 
 using namespace std;
 
@@ -102,16 +103,66 @@ Matrix Matrix::transpose()
   return result;
 }
 
-void Matrix::print()
+// returns the number of digits of an integer
+int num_digit(int n)
 {
-    // alignment is a problem. Need to be smart to fix this
+  int number = 0;
+  if (n < 0)
+    {
+      number++;
+    }
+  while (n != 0)
+    {
+      n = n / 10;
+      number++;
+    }
+  return number;
+}
+
+// prints the matrix with good alignment
+void Matrix::print()
+{  
+  int *col_longest = new int[c];
+  int **diff = new int*[r];
+  // first construct the 2d array of diff;
+  for (int i = 0; i < r; i++)
+    {
+      diff[i] = new int[c];
+    }
+
+  for (int j = 0; j < c; j++)
+    {
+      for (int i = 0; i < r; i++)
+        {
+          int digits = num_digit(m_arr[i][j]);
+          if (digits > col_longest[j])
+            {
+              col_longest[j] = digits;
+            }
+        }
+
+      // this loop computes the diff of length of each 
+      // cell to the longest one
+      for (int i = 0; i < r; i++)
+        {
+          int digits = num_digit(m_arr[i][j]);
+          diff[i][j] = col_longest[j] - digits;
+        }
+    }
+
+  // finally print it out
   for (int i = 0; i < r; i++)
     {
       cout << "[";
       for (int j = 0; j < c; j++)
         {
-          cout << this->get(i,j);
-          if (j != c-1)
+          // print spaces
+          for (int k = 0; k < diff[i][j]; k++)
+            {
+              cout << " ";
+            }
+          cout << m_arr[i][j];
+          if (j != (c-1))
             {
               cout << " ";
             }
@@ -139,3 +190,52 @@ Matrix Matrix::readMatrix(string name)
   Matrix result = Matrix(ary, r, c);
   return result;
 }
+
+// takes in indices of two rows and swap them
+Matrix Matrix::swaprow_new(int r1, int r2)
+{
+  int **ary = new int*[r];
+  for (int i = 0; i < r; i++) 
+    {
+      ary[i] = new int[c];
+      for (int j = 0; j < c; j++) 
+        {
+          if (i == r1)
+            {
+              ary[i][j] = m_arr[r2][j];
+            }
+          else if (i == r2)
+            {
+              ary[i][j] = m_arr[r1][j];
+            }
+          else
+            {
+              ary[i][j] = m_arr[i][j];
+            }
+        }
+    }
+  Matrix result = Matrix(ary, r, c);
+  return result;
+}
+
+// swap the rows without producing another matrix
+void Matrix::swaprow(int r1, int r2)
+{
+  int *temp = m_arr[r1];
+  m_arr[r1] = m_arr[r2];
+  m_arr[r2] = temp;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
