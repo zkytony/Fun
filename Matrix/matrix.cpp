@@ -226,16 +226,68 @@ void Matrix::swaprow(int r1, int r2)
   m_arr[r2] = temp;
 }
 
+Matrix Matrix::minor(int r_m, int c_m)
+{
+  int **ary = new int*[r-1];
+  for (int i = 0; i < r; i++)
+    {
+      if (i < r-1)
+        {
+          ary[i] = new int[c-1];
+        }
+      if (i != r_m)
+        {
+          for (int j = 0; j < c; j++)
+            {
+              if (j != c_m) {
+                int row_index = (i > r_m ? i-1 : i);
+                int col_index = (j > c_m ? j-1 : j);
+                ary[row_index][col_index] = m_arr[i][j];
+              }
+            }            
+        }
+    }
+  Matrix result = Matrix(ary, r-1, c-1);
+  return result;
+}
 
+// Compute the determinant of this matrix, if it is defined
+int Matrix::det()
+{
+  try
+    {
+      if (r != c)
+        {
+          throw (101);
+        }
+      else if (r == 1 && c == 1)
+        {
+          return this->get(0, 0);
+        }
+      else 
+        {
+          int r_m = 0;
+          int det = 0;
+          for (int j = 0; j < c; j++)
+            {
+              int term = m_arr[r_m][j] * this->det(r_m, j);
+              if ((r_m + j) % 2 == 1)
+                {
+                  term = -term;
+                }
+              det += term;
+            }
+          return det;
+        }
+    } 
+  catch (int err) 
+    {
+      cerr << "Determinant is not defined. Error " << err << endl;
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
+int Matrix::det(int i, int j)
+{
+  Matrix minor = this->minor(i, j);
+  return minor.det();
+}

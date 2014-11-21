@@ -1,4 +1,5 @@
 #include <iostream>
+#include <time.h>
 #include "matrix.hpp"
 
 using namespace std;
@@ -42,8 +43,13 @@ int** readMatrix()
 // first try out two dimensional arrays
 int main()
 {
+  clock_t t;
+  t = clock();
+
   Matrix A = Matrix::readMatrix("A");
   A.print();
-  A.swaprow(0,1);
-  A.print();
+  cout << "Determinant " << A.det() << endl;
+
+  t = clock() - t;
+  cout << "TIME TAKEN: " << t << " clock cycle." << endl;
 }
