@@ -72,7 +72,7 @@ public class IChingStripper {
 
         String result = "";
         result += "<!-- Project begins ======================= -->";
-        result += "<div class=\"project\">";
+        result += "<div class=\"project\" id=\"gua-" + n + "\">";
 
         result += "<div class=\"projectThumbnail\">";
         result += "<svg class=\"thumbnailMask\"></svg>";
@@ -85,12 +85,6 @@ public class IChingStripper {
 
         result += "<div class=\"projectInfo\">";
         result += "<h4>" + guaCiMap.get(n).get(0) + "</h4>";  // title
-        result += "<div class=\"projectNavCounter\"></div>";
-        result += "<div class=\"projectNav\">";
-        //result += "<div class=\"projectNavEnlarge\"><button class=\"enlargeButton\" onClick=\"window.location.href='projects/project_01/index.html\">View full-size</button></div>";
-        result += "<div class=\"projectNavClose\"><button class=\"closeButton\">Close</button></div>";
-        result += "<div class=\"projectNavButtons\"><button class=\"prev\"></button><button class=\"next\"></button></div>";
-        result += "</div>";
         result += "<p>";
 
         String yaoCi = "";
